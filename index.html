@@ -400,4 +400,142 @@
 
 <section class="section" id="testimonials">
     <div class="container">
-        <h2 class="section-title">ماذا يق
+        <h2 class="section-title">ماذا يقول عملاؤنا</h2>
+        <p class="section-sub">آراء حقيقية من مستخدمين حقيقيين اختبروا الفرق مع RABI3BET.</p>
+        <div class="testimonials">
+            <div class="testimonial-card"><div class="testimonial-stars">⭐⭐⭐⭐⭐</div><p class="testimonial-text">"أفضل تجربة مراهنات في حياتي! السحوبات فورية والبونص الترحيبي خرافي. أنصح الجميع بالتسجيل."</p><div class="testimonial-author">— أحمد من تونس</div></div>
+            <div class="testimonial-card"><div class="testimonial-stars">⭐⭐⭐⭐⭐</div><p class="testimonial-text">"الدعم الفني متاح 16 ساعة والمنصة سريعة جداً. RABI3BET غيرت مفهوم المراهنات بالنسبة لي."</p><div class="testimonial-author">— سارة من المغرب</div></div>
+            <div class="testimonial-card"><div class="testimonial-stars">⭐⭐⭐⭐⭐</div><p class="testimonial-text">"البونص وصل لحد 500% على الإيداع الأول! شيء لا يُصدق. شكراً RABI3BET على الاحترافية."</p><div class="testimonial-author">— كريم من الجزائر</div></div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="footer-logo">RABI3BET</div>
+    
+    <div class="social-title">📲 تواصل معنا</div>
+    <div class="social-buttons">
+        <a href="https://t.me/RABI3BET" target="_blank" class="social-btn telegram-btn">
+            <i class="fab fa-telegram-plane"></i> Telegram
+        </a>
+        <a href="https://www.facebook.com/share/1LGkrqJJmu/?mibextid=wwXIfr" target="_blank" class="social-btn facebook-btn">
+            <i class="fab fa-facebook-f"></i> Facebook
+        </a>
+    </div>
+    
+    <ul class="footer-links">
+        <li><a href="#">سياسة الخصوصية</a></li>
+        <li><a href="#">الشروط والأحكام</a></li>
+        <li><a href="#">اتصل بنا</a></li>
+        <li><a href="#">الأسئلة الشائعة</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 RABI3BET. جميع الحقوق محفوظة. أقوى منصة مراهنات في العالم.</p>
+</footer>
+
+<button class="floating-btn" title="العودة للأعلى"><i class="fas fa-arrow-up"></i></button>
+
+<script>
+    const cursor = document.querySelector('.cursor');
+    const cursorDot = document.querySelector('.cursor-dot');
+    document.addEventListener('mousemove', (e) => {
+        if (cursor && cursorDot) {
+            cursor.style.left = e.clientX - 12 + 'px';
+            cursor.style.top = e.clientY - 12 + 'px';
+            cursorDot.style.left = e.clientX - 3.5 + 'px';
+            cursorDot.style.top = e.clientY - 3.5 + 'px';
+        }
+    });
+
+    window.addEventListener('scroll', () => {
+        const navbar = document.getElementById('navbar');
+        if (navbar) {
+            if (window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+        }
+    });
+
+    function animateCounters() {
+        const counters = document.querySelectorAll('.stat-number');
+        counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            const duration = 2000;
+            const step = target / (duration / 16);
+            let current = 0;
+            const updateCounter = () => {
+                current += step;
+                if (current < target) {
+                    counter.textContent = Math.floor(current);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    counter.textContent = target;
+                }
+            };
+            updateCounter();
+        });
+    }
+
+    window.addEventListener('load', () => { setTimeout(animateCounters, 500); });
+    const statsSection = document.getElementById('stats');
+    if (statsSection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) { animateCounters(); observer.unobserve(entry.target); } });
+        }, { threshold: 0.3 });
+        observer.observe(statsSection);
+    }
+
+    const canvas = document.getElementById('particles-canvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+                this.opacity = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                this.x += this.speedX; this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0; if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0; if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(229, 9, 20, ${this.opacity})`; ctx.fill();
+            }
+        }
+        function initParticles() {
+            particles = [];
+            const count = Math.floor((canvas.width * canvas.height) / 15000);
+            for (let i = 0; i < count; i++) particles.push(new Particle());
+        }
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateParticles);
+        }
+        initParticles(); animateParticles();
+        window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
+    }
+
+    const floatingBtn = document.querySelector('.floating-btn');
+    if (floatingBtn) floatingBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+
+    console.log('✅ RABI3BET - جميع الأنظمة تعمل بنجاح');
+</script>
+
+</body>
+</html>
